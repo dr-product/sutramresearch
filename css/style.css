@@ -259,6 +259,7 @@ h6,
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center;
+    text-align: center;
 }
 .commitment_section h1{
     font-weight: 800 !important;
