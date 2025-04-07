@@ -270,5 +270,13 @@ h6,
     .contact_image{
         display: none;
     }
-    
+
+    .commitment_section{
+        padding: 40px 20px;
+    }
+
+    .commitment_section h1{
+        font-size: 30px !important;
+    }
+
 }
