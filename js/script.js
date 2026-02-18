@@ -57,7 +57,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
         return;
     }
 
-    const response = await fetch("https://mw-backend-green.vercel.app/nexastats", {
+    const response = await fetch("https://mw-backend-green.vercel.app/sutramresearch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, subject, message }),

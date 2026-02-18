@@ -1,155 +1,186 @@
-<!-- @format -->
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <title>Terms &amp; Conditions - NexaStats</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-      }
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
-        margin: 0;
-        padding: 0;
-        color: #333;
-        height: 100vh;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms and Conditions - Sutram Research Private Limited</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d9488;
+      --dark: #0f172a;
+      --muted: #586477;
+      --bg: #f4f8fb;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.75;
+    }
+
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid #e2eaf2;
+      padding: 20px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: linear-gradient(145deg, var(--primary), #0f5f8f);
+      font-size: 0.9rem;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 20px 30px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid #e0e9f3;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+      padding: 34px 30px;
+    }
+
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 6px;
+      color: var(--dark);
+    }
+
+    .meta {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.18rem;
+      color: var(--primary);
+      margin: 24px 0 10px;
+    }
+
+    ul {
+      padding-left: 20px;
+      color: var(--dark);
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #0b7d72;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 26px;
+      padding: 18px 0 32px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
       .header {
-        display: flex;
-        background-color: #33333317;
-        padding: 20px 30px;
+        padding: 16px 20px;
       }
 
-      .content {
-        max-width: 1100px;
-        margin: auto;
-      }
-      .content .list_content {
-        margin-bottom: 20px;
-      }
-      .content span {
-        font-weight: bold;
-        color: #333;
+      .card {
+        padding: 26px 20px;
       }
 
-      .content h1 {
-        color: #f3525a;
-        margin: 40px 0;
-        text-align: center;
+      h1 {
+        font-size: 1.6rem;
       }
-      .updated {
-        text-align: center;
-        margin-top: -20px;
-        margin-bottom: 30px;
-        color: #666;
-        font-size: 0.95em;
-      }
-      p {
-        margin: 0 auto;
-        border-radius: 10px;
-        line-height: 1.8;
-      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SR</span>
+      <span>Sutram Research Private Limited</span>
+    </a>
+  </header>
 
-      .list_main {
-        padding: 0;
-      }
-      .footer {
-        text-align: center;
-        margin-top: 30px;
-        display: flex;
-        background-color: #152440;
-        justify-content: center;
-        align-items: center;
-        height: 60px;
-        color: #f9f9f9;
-      }
-      @media screen and (max-width: 768px) {
-        .header {
-          flex-direction: column;
-          align-items: center;
-        }
-        .content {
-          padding-left: 30px;
-          padding-right: 30px;
-        }
-        .content h1 {
-          font-size: 1.5em;
-        }
-        p {
-          max-width: 90%;
-          font-size: 0.9em;
-          padding: 10px 15px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="header">
-      <a href="index.html"
-        ><img
-          src="img/nexastats_logo.png"
-          alt="Logo"
-          style="width: 180px; height: 60px;"
-      /></a>
-    </div>
-    <div class="content">
-      <h1>Terms &amp; Conditions</h1>
-      <p class="updated">Last Updated: December 5, 2025</p>
-      <ol class="list_main">
-        <li class="list_content">
-          <span>Terms of Use</span>
-          <p>
-            These Terms of Use form a binding legal agreement between you
-            (whether you're acting on your own or representing a company) and
-            NexaStats ("Company," "we," "our," or "us"). By accessing or using
-            our website <a href="https://nexastats.com">https://nexastats.com</a
-            >, along with any of our services such as Bulk SMS, WhatsApp
-            Marketing, you're agreeing to be bound by these Terms.
-          </p>
-          <p>
-            By continuing to use the Site and our Services, you acknowledge that
-            you've read, understood, and accept these Terms in full.
-          </p>
-          <p>
-            If you do not agree with these Terms, you are not permitted to use
-            the Site or any of our Services. Please discontinue use immediately.
-          </p>
-        </li>
-        <li class="list_content">
-          <span>Additional Terms May Apply</span>
-          <p>
-            From time to time, we may add or update specific terms, policies, or
-            other documents. These updates are considered part of this
-            agreement. We reserve the right to modify these Terms at any time,
-            and if we do, we'll update the "Last Updated" date to reflect those
-            changes.
-          </p>
-          <p>
-            It's your responsibility to review the Terms regularly. If you
-            continue to use our services after changes are posted, it means you
-            accept and agree to the revised terms.
-          </p>
-        </li>
-        <li class="list_content">
-          <span>Use Beyond Borders</span>
-          <p>
-            The information and services provided on our website are not
-            intended for use or distribution in any location where such use
-            would be against local laws or regulations. If you access the Site
-            from outside of our operational region, you do so at your own risk
-            and are solely responsible for ensuring your actions comply with
-            local laws.
-          </p>
-        </li>
-      </ol>
-    </div>
-    <div class="footer">&copy; NexaStats | All Rights Reserved</div>
-  </body>
+  <main class="container">
+    <article class="card">
+      <h1>Terms and Conditions</h1>
+      <p class="meta">Last Updated: February 18, 2026</p>
+
+      <p>These Terms and Conditions govern your use of <a href="https://sutramresearch.com" target="_blank" rel="noopener noreferrer">sutramresearch.com</a> and any services offered by Sutram Research Private Limited ("Company", "we", "our", "us"). By accessing our website or engaging our services, you agree to these terms.</p>
+
+      <h2>1. Scope of Services</h2>
+      <p>Our services may include Market Research, Analytics, and Consulting. Service scope, timelines, deliverables, and commercial terms are governed by project-specific proposals, statements of work, or agreements.</p>
+
+      <h2>2. User Responsibilities</h2>
+      <ul>
+        <li>Provide accurate and complete information when submitting inquiries.</li>
+        <li>Use the website and services in compliance with applicable laws.</li>
+        <li>Avoid unauthorized access, misuse, or disruption of our website infrastructure.</li>
+      </ul>
+
+      <h2>3. Intellectual Property</h2>
+      <p>All website content, branding, methodologies, and materials are owned by or licensed to Sutram Research Private Limited unless otherwise stated. Unauthorized copying, redistribution, or commercial use is prohibited.</p>
+
+      <h2>4. Confidentiality</h2>
+      <p>Both parties agree to protect confidential information exchanged during engagements. Project-specific confidentiality obligations may be further defined in separate agreements.</p>
+
+      <h2>5. Third-Party Tools and Links</h2>
+      <p>Our site may include links to third-party websites or use external tools. We are not responsible for third-party content, systems, or privacy practices.</p>
+
+      <h2>6. Disclaimer</h2>
+      <p>Information on this website is provided on an "as is" and "as available" basis. While we strive for accuracy, we do not guarantee that all website content is complete, current, or error-free at all times.</p>
+
+      <h2>7. Limitation of Liability</h2>
+      <p>To the extent permitted by law, Sutram Research Private Limited shall not be liable for indirect, incidental, special, or consequential losses arising from website use or service access.</p>
+
+      <h2>8. Changes to Terms</h2>
+      <p>We may update these terms from time to time. Continued use of the website after changes are published constitutes acceptance of revised terms.</p>
+
+      <h2>9. Governing Law and Jurisdiction</h2>
+      <p>These terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of competent courts in India, unless otherwise agreed in writing.</p>
+
+      <h2>10. Contact</h2>
+      <p>For questions regarding these Terms and Conditions, contact us at <a href="mailto:contact@sutramresearch.com">contact@sutramresearch.com</a>.</p>
+    </article>
+  </main>
+
+  <div class="footer">&copy; Sutram Research Private Limited | All Rights Reserved</div>
+</body>
 </html>
