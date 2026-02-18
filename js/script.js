@@ -1,77 +1,165 @@
+const API_ENDPOINTS = [
+    "https://mw-backend-green.vercel.app/sutramresearch",
+    "https://mw-backend-green.vercel.app/nexastats",
+];
+
+function getFeedbackEl() {
+    const form = document.getElementById("contactForm");
+    let feedback = document.getElementById("contact-feedback");
+
+    if (!feedback && form) {
+        feedback = document.createElement("div");
+        feedback.id = "contact-feedback";
+        feedback.className = "alert mt-3 d-none";
+        feedback.setAttribute("role", "alert");
+        feedback.setAttribute("aria-live", "polite");
+        form.appendChild(feedback);
+    }
+
+    return feedback;
+}
+
+function showFeedback(type, message) {
+    const feedback = getFeedbackEl();
+    if (!feedback) return;
+
+    let alertClass = "alert-danger";
+    if (type === "success") alertClass = "alert-success";
+    if (type === "info") alertClass = "alert-info";
+    feedback.className = `alert ${alertClass} mt-3`;
+    feedback.textContent = message;
+}
+
+function clearFeedback() {
+    const feedback = getFeedbackEl();
+    if (!feedback) return;
+
+    feedback.className = "alert mt-3 d-none";
+    feedback.textContent = "";
+}
+
 function validateForm() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const subject = document.getElementById("subject").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    // Regular expression for email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const namePattern = /^[a-zA-Z\s]+$/; // Allows only letters and spaces
+    const namePattern = /^[a-zA-Z.\-\s]+$/;
 
-    if (name === "") {
-        alert("Name cannot be empty.");
-        return false;
-    } else if (!namePattern.test(name)) {
-        alert("Name can only contain letters and spaces.");
-        return false;
-    }
+    if (name === "") return "Name cannot be empty.";
+    if (!namePattern.test(name)) return "Name can only contain letters, spaces, dots, and hyphens.";
+    if (email === "" || !emailPattern.test(email)) return "Please enter a valid email address.";
+    if (subject === "") return "Subject cannot be empty.";
+    if (subject.length < 5) return "Subject must be at least 5 characters long.";
+    if (message === "") return "Message cannot be empty.";
+    if (message.length < 10) return "Message must be at least 10 characters long.";
 
-    if (email === "" || !emailPattern.test(email)) {
-        alert("Please enter a valid email address.");
-        return false;
-    }
-
-    if (subject === "") {
-        alert("Subject cannot be empty.");
-        return false;
-    } else if (subject.length < 5) {
-        alert("Subject must be at least 5 characters long.");
-        return false;
-    }
-
-    if (message === "") {
-        alert("Message cannot be empty.");
-        return false;
-    } else if (message.length < 10) {
-        alert("Message must be at least 10 characters long.");
-        return false;
-    }
-
-    return true;
+    return "";
 }
 
-document.getElementById("contactForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+async function parseResponse(response) {
+    const raw = await response.text();
+    if (!raw) return {};
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const subject = document.getElementById("subject").value.trim();
-    const message = document.getElementById("message").value.trim();
-    const btn = document.getElementById("submit-btn");
-    btn.innerHTML = "Sending...";
-    btn.disabled = true;
-
-    if(!validateForm()) {
-        btn.innerHTML = "Submit";
-        btn.disabled = false;
-        return;
+    try {
+        return JSON.parse(raw);
+    } catch (_) {
+        return { message: raw };
     }
+}
 
-    const response = await fetch("https://mw-backend-green.vercel.app/sutramresearch", {
+async function submitToEndpoint(url, payload) {
+    const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, message }),
+        body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
-    alert(result.message);
-    // empty form fields
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("subject").value = "";
-    document.getElementById("message").value = "";
-    document.getElementById("contactForm").reset();
+    const parsed = await parseResponse(response);
+    return { response, parsed };
+}
 
-    btn.innerHTML = "Submit";
-    btn.disabled = false;
-});
+const contactForm = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submit-btn");
+
+if (contactForm && submitBtn) {
+    contactForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        clearFeedback();
+
+        if (!contactForm.checkValidity()) {
+            contactForm.reportValidity();
+            return;
+        }
+
+        const validationMessage = validateForm();
+        if (validationMessage) {
+            showFeedback("error", validationMessage);
+            return;
+        }
+
+        const payload = {
+            name: document.getElementById("name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            subject: document.getElementById("subject").value.trim(),
+            message: document.getElementById("message").value.trim(),
+        };
+
+        submitBtn.innerHTML = "Sending...";
+        submitBtn.disabled = true;
+        showFeedback("info", "Submitting your request. Please wait...");
+
+        let finalError = "Unable to submit the form.";
+
+        try {
+            for (let i = 0; i < API_ENDPOINTS.length; i += 1) {
+                const endpoint = API_ENDPOINTS[i];
+
+                try {
+                    const { response, parsed } = await submitToEndpoint(endpoint, payload);
+                    const serverMessage = parsed?.message || "";
+
+                    if (response.ok) {
+                        showFeedback("success", serverMessage || "Thank you. Your message has been submitted successfully.");
+                        contactForm.reset();
+                        return;
+                    }
+
+                    finalError = `Server returned ${response.status}${serverMessage ? `: ${serverMessage}` : "."}`;
+
+                    // Fallback to legacy endpoint only on 404/405.
+                    if (i < API_ENDPOINTS.length - 1 && (response.status === 404 || response.status === 405)) {
+                        continue;
+                    }
+
+                    break;
+                } catch (endpointError) {
+                    const errorMessage = endpointError?.message || String(endpointError);
+                    const isNetworkLike =
+                        errorMessage.toLowerCase().includes("failed to fetch") ||
+                        errorMessage.toLowerCase().includes("networkerror") ||
+                        errorMessage.toLowerCase().includes("load failed");
+
+                    if (isNetworkLike) {
+                        finalError = "Network/CORS error: browser could not reach the API. If Postman works, CORS is likely blocked on the server.";
+                    } else {
+                        finalError = `Request failed: ${errorMessage}`;
+                    }
+
+                    // Retry next endpoint only for likely not-found route patterns.
+                    if (i < API_ENDPOINTS.length - 1 && errorMessage.toLowerCase().includes("404")) {
+                        continue;
+                    }
+
+                    break;
+                }
+            }
+
+            showFeedback("error", finalError);
+        } finally {
+            submitBtn.innerHTML = "Submit";
+            submitBtn.disabled = false;
+        }
+    });
+}
