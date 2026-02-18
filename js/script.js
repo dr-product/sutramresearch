@@ -1,6 +1,5 @@
 const API_ENDPOINTS = [
     "https://mw-backend-green.vercel.app/sutramresearch",
-    "https://mw-backend-green.vercel.app/nexastats",
 ];
 
 function getFeedbackEl() {
@@ -142,7 +141,7 @@ if (contactForm && submitBtn) {
                         errorMessage.toLowerCase().includes("load failed");
 
                     if (isNetworkLike) {
-                        finalError = "Network/CORS error: browser could not reach the API. If Postman works, CORS is likely blocked on the server.";
+                        finalError = "Network/CORS error: browser could not reach the API.";
                     } else {
                         finalError = `Request failed: ${errorMessage}`;
                     }
