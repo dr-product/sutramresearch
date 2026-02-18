@@ -24,6 +24,15 @@ body {
     font-family: 'Public Sans', sans-serif;
     color: var(--text);
     background: #ffffff;
+    padding-top: 96px;
+}
+
+#home,
+#about,
+#services,
+#whychooseus,
+#contactus {
+    scroll-margin-top: 118px;
 }
 
 h1,
@@ -86,7 +95,13 @@ h6,
 }
 
 .site-nav {
-    background: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: saturate(130%) blur(6px);
     border-bottom: 1px solid #e6ebf5;
 }
 
@@ -502,6 +517,10 @@ h6,
 }
 
 @media (max-width: 991.98px) {
+    body {
+        padding-top: 86px;
+    }
+
     .navbar-light .navbar-nav .nav-link {
         padding: 10px 0;
     }
